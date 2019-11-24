@@ -10,5 +10,5 @@ echo get_freq |rigctl -m 133 -r /dev/ttyUSB4  -s 4800 -C stop_bits=2 -vvvvv
 
 # Hardware
 - Make sure S4002 and S4003 or in Position "A" (cf. manual)
-- USE the 9-pin Connector with a "null modem" cable.
+- USE the 9-pin Connector with a "null modem" cable. (i.e. https://www.amazon.de/gp/product/B008634VJY/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
 
