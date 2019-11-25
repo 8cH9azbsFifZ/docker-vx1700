@@ -1,0 +1,14 @@
+version: '3'
+services:
+ vx1700:
+  #build: ./
+  image: asdlfkj31h/vx1700:0.1
+  container_name: vx1700 
+  #volumes:
+  #network_mode: "host"
+  #restart: always
+  devices:
+   - "/dev/ttyUSB1:/dev/ttyUSB1"
+#volumes:
+# accountconfig:
+
