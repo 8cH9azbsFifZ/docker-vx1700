@@ -1,27 +1,28 @@
-FROM debian:buster-slim
+FROM asdlfkj31h/debian-wine:0.2
 
 MAINTAINER Gerolf Ziegenhain <gerolf.ziegenhain@gmail.com>
 
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-ENV LC_ALL C.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+# Configuration VX1700
+ENV TTY_CAT /dev/ttyUSB0
+ENV TTY_PTT /dev/ttyUSB1
+ENV SOUND_IN 
+ENV SOUND_OUT
 
-RUN dpkg --add-architecture i386
-RUN apt-get update && apt-get -y install xvfb x11vnc xdotool wget tar supervisor wine32-development net-tools fluxbox
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Configuration Operator
+ENV CALLSIGN DG6FL
+ENV LOCATOR JN49dx
+
+# Prepare CE77
+ADD yaesu_ce77win /
+RUN mkdir -p /root/.wine/dosdevices/
+RUN ln -s /dev/ttyUSB0 ~/.wine/dosdevices/com1
+RUN ln -s /dev/ttyUSB1 ~/.wine/dosdevices/com2
+
+# Install additional SW
+RUN apt-get update
+RUN apt-get -y install libhamlib-utils wsjtx fldigi
 RUN apt-get -qqy autoclean && rm -rf /tmp/* /var/tmp/*
 
-ENV WINEPREFIX /root/prefix32
-ENV WINEARCH win32
-ENV DISPLAY :0
-
-WORKDIR /root/
-RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C /root/ && mv /root/noVNC-1.1.0 /root/novnc && ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
-RUN wget -O - https://github.com/novnc/websockify/archive/v0.9.0.tar.gz | tar -xzv -C /root/ && mv /root/websockify-0.9.0 /root/novnc/utils/websockify
-
-ADD yaesu_ce77win /
 
 EXPOSE 8080
 
