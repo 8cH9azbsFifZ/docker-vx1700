@@ -1,6 +1,5 @@
 # docker-vx1700
 
-docker run --rm -it -e PTT_CAT=/dev/ttyUSB0 -e TTY_CAT=/dev/ttyUSB1 --device=/dev/ttyUSB0 --device=/dev/ttyUSB1 -p 8080:8080 asdlfkj31h/vx1700:0.1
 
 
 
@@ -26,6 +25,8 @@ echo get_freq |rigctl -m 133 -r /dev/ttyUSB4  -s 4800 -C stop_bits=2 -vvvvv
 
     # dmesg|grep pl2303|tail -n1|sed 's/.* //g'
 
+ Run without sound:
+docker run --rm -it -e PTT_CAT=/dev/ttyUSB0 -e TTY_CAT=/dev/ttyUSB1 --device=/dev/ttyUSB0 --device=/dev/ttyUSB1 -p 8080:8080 asdlfkj31h/vx1700:0.1
 
 # Soundcard:
 - https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
@@ -49,17 +50,4 @@ docker run --rm \
     --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
     --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
     --user $(id -u):$(id -g) --rm -it -e PTT_CAT=/dev/ttyUSB0 -e TTY_CAT=/dev/ttyUSB1 --device=/dev/ttyUSB0 --device=/dev/ttyUSB1 -p 8080:8080 asdlfkj31h/vx1700:0.1
-
-
-
-
-docker run --rm \
-    --env PULSE_SERVER=unix:/tmp/pulseaudio.socket \
-    --env PULSE_COOKIE=/tmp/pulseaudio.cookie \
-    --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
-    --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
-    --user $(id -u):$(id -g) --rm -it -e PTT_CAT=/dev/ttyUSB0 -e TTY_CAT=/dev/ttyUSB1 --device=/dev/ttyUSB0 --device=/dev/ttyUSB1 -p 8080:8080 asdlfkj31h/vx1700:0.1
-
-
-
 

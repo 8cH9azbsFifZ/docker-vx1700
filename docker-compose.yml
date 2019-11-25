@@ -1,6 +1,13 @@
 version: '3'
 services:
  vx1700:
+  environment:
+   - TTY_CAT=/dev/ttyUSB1
+   - PTT_PTT=/dev/ttyUSB0
+   #- LOCATOR=
+   #- CALLSIGN=
+   - SOUND_IN=
+   - SOUND_OUT=
   #build: ./
   image: asdlfkj31h/vx1700:0.1
   container_name: vx1700 
@@ -8,6 +15,7 @@ services:
   #network_mode: "host"
   #restart: always
   devices:
+   - "/dev/ttyUSB0:/dev/ttyUSB0"
    - "/dev/ttyUSB1:/dev/ttyUSB1"
 #volumes:
 # accountconfig:
