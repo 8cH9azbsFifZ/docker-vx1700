@@ -23,3 +23,5 @@ docker run --rm \
     --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
     --user $(id -u):$(id -g) --rm -it -e PTT_CAT=$TTY_CAT -e TTY_PTT=$TTY_PTT --device=$TTY_CAT --device=$TTY_PTT -p 8080:8080 asdlfkj31h/vx1700:0.1
 
+
+
