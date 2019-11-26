@@ -5,8 +5,8 @@ MAINTAINER Gerolf Ziegenhain <gerolf.ziegenhain@gmail.com>
 # Configuration VX1700
 ENV TTY_CAT /dev/ttyUSB0
 ENV TTY_PTT /dev/ttyUSB1
-ENV SOUND_IN 
-ENV SOUND_OUT
+ENV SOUND_IN NONE
+ENV SOUND_OUT NONE
 
 # Configuration Operator
 ENV CALLSIGN DG6FL
