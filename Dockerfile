@@ -21,6 +21,7 @@ RUN ln -s /dev/ttyUSB1 ~/.wine/dosdevices/com2
 # Install additional SW
 RUN apt-get update
 RUN apt-get -y install libhamlib-utils wsjtx fldigi
+RUN apt-get -y install socat ser2net
 RUN apt-get -qqy autoclean && rm -rf /tmp/* /var/tmp/*
 
 
