@@ -1,7 +1,11 @@
 # docker-vx1700
 
+Contains software to control and program the Vertex VX-1700
+
+- Status: WIP
+
 # Use CE77WIN
-- Software to programm the VX-1700
+- Software to programm the VX-1700 (binaries included, as stuff may vanish from internet...)
 
 # Hardware
 - Preparation for CAT: Make sure S4002 and S4003 or in Position "A" (cf. manual)
