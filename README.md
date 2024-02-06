@@ -2,7 +2,7 @@
 
 Contains software to control and program the Vertex VX-1700
 
-- Status: WIP
+- Status: WIP - wine 32 does not work any more
 
 # Use CE77WIN
 - Software to programm the VX-1700 (binaries included, as stuff may vanish from internet...)

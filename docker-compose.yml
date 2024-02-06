@@ -1,22 +1,13 @@
 version: '3'
 services:
- vx1700:
-  environment:
-   - TTY_CAT=/dev/ttyUSB1
-   - PTT_PTT=/dev/ttyUSB0
-   #- LOCATOR=
-   #- CALLSIGN=
-   - SOUND_IN=
-   - SOUND_OUT=
-  #build: ./
-  image: asdlfkj31h/vx1700:0.1
-  container_name: vx1700 
-  #volumes:
-  #network_mode: "host"
-  #restart: always
-  devices:
-   - "/dev/ttyUSB0:/dev/ttyUSB0"
-   - "/dev/ttyUSB1:/dev/ttyUSB1"
-#volumes:
-# accountconfig:
+   vx1700:
+      image: vx1700
+      # devices:
+      #    - "/dev/ttyUSB0:/dev/ttyUSB0"
+      #    - "/dev/ttyUSB1:/dev/ttyUSB1"
 
+      volumes:
+         - /dev/bus/usb:/dev/bus/usb
+         #- ./WSJT-X.ini:/root/.config/WSJT-X.ini
+      ports:
+         - 8081:8080

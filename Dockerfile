@@ -1,39 +1,39 @@
-FROM asdlfkj31h/debian-wine:0.2
+FROM debian:latest AS wine
 
-MAINTAINER Gerolf Ziegenhain <gerolf.ziegenhain@gmail.com>
+# Install Wine & XFCE 
+ENV HOME /root
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+RUN apt-get update && apt-get -y install gettext-base tigervnc-standalone-server dbus-x11 novnc python3-websockify python3-pip  xfce4 xdotool wget tar net-tools gnupg2 procps wine
+RUN apt-get -qqy autoclean && rm -rf /tmp/* /var/tmp/*
+ENV DISPLAY :0
 
-# Configuration VX1700
-ENV RIGSERVER 10.101.10.53
-ENV RIGSERVER_PTT_PORT 3003
-ENV RIGSERVER_CAT_PORT 3002
-ENV RIGMODEL 133
+RUN dpkg --add-architecture i386 && apt update && apt -y install wine32
+ENV WINEARCH=win32
+RUN winecfg
 
-# Configuration Operator
-ENV CALLSIGN DG6FL
-ENV LOCATOR JN49dx
+# Set VNC password
+RUN mkdir /root/.vnc 
+RUN echo "" | vncpasswd -f > /root/.vnc/passwd
+RUN chmod 0600 /root/.vnc/passwd
+#RUN printf "password\npassword\n\n" | vncpasswd
+
+RUN winecfg
 
 # Prepare CE77
-ADD yaesu_ce77win /
+WORKDIR /app
+ADD yaesu_ce77win /app
 RUN mkdir -p /root/.wine/dosdevices/
 RUN ln -s /dev/cat ~/.wine/dosdevices/com1
 
-# Install additional SW
-RUN apt-get update
-RUN apt-get -y install libhamlib-utils wsjtx fldigi
-RUN apt-get -y install socat 
-RUN apt-get -y install pulseaudio pavucontrol
-RUN apt-get -qqy autoclean && rm -rf /tmp/* /var/tmp/*
 
-#HEALTHCHECK --interval=10s --timeout=3s CMD rigctl -m $RIGMODEL -r /dev/YPort f ||exit 1
+FROM wine AS novnc
 
-
-ADD startup.sh /bin
-RUN mkdir /root/.config
-ADD WSJT-X.ini /root/.config
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
+ADD ./config/xfce4 /root/.config/xfce4
+COPY entrypoint.sh .
 
 EXPOSE 8080
 
-ENTRYPOINT ["startup.sh"]
-CMD ["/usr/bin/supervisord"]
+CMD ["./entrypoint.sh"]
